@@ -8,15 +8,14 @@ var io = require('socket.io')(server);
 
 var PORT = 8080;
 
-//var SERIAL_PORT = "/dev/tty.usbserial-1d11B";
-var SERIAL_PORT = "/dev/serial/by-id/usb-FTDI_Dual_RS232-HS-if01-port0";
-//var SERIAL_PORT = "COM5";
+var LTE_HOST = "91.134.250.109";
+var LTE_PORT = 33333;
 
 var receivedMessages = new Array();
 
-var serialHelper = require('./app/serialPort/serialPortHelper')(SERIAL_PORT);
+var lteHelper = require('./app/lte/lteHelper')(LTE_HOST, LTE_PORT);
 
-require('./config/express')(app, io, config, serialHelper, receivedMessages);
+require('./config/express')(app, io, config, lteHelper, receivedMessages);
 
 server.listen(PORT, function () {
 	console.log('Express server listening on port ' + PORT);

@@ -38,6 +38,6 @@ echo '@xset s noblank
 @lxterminal -e "/home/pi/launcher.sh"
 @chromium-browser --disable-infobars --disable-session-crashed-bubble --start-fullscreen http://localhost:8080 ' >> /home/pi/.config/lxsession/LXDE-pi/autostart
 
-cd /home/pi/demo-smartbuilding-device && npm install serialport && npm install
+cd /home/pi/demo-smartbuilding-device && npm install
 
 sudo reboot

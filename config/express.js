@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
 
-module.exports = function(app, io, config, serialHelper, receivedMessages) {
+module.exports = function(app, io, config, lteHelper, receivedMessages) {
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -28,12 +28,12 @@ module.exports = function(app, io, config, serialHelper, receivedMessages) {
 
   var controllers = glob.sync(config.root + '/app/controllers/httpControllers/*.js');
   controllers.forEach(function (controller) {
-    require(controller)(app, serialHelper, receivedMessages);
+    require(controller)(app, lteHelper, receivedMessages);
   });
 
   var socketControllers = glob.sync(config.root + '/app/controllers/socketControllers/*.js');
   socketControllers.forEach(function (socketController) {
-    require(socketController)(io, serialHelper, receivedMessages);
+    require(socketController)(io, lteHelper, receivedMessages);
   });
 
   app.use(function (req, res, next) {

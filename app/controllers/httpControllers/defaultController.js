@@ -1,13 +1,13 @@
 var express = require('express');
 var routerHome = express.Router();
 var routerAPI = express.Router();
-var serialHelper = null;
+var lteHelper = null;
 var receivedMessages = null;
 
-module.exports = function (app, serialHelperPar, receivedMessagesPar) {
+module.exports = function (app, lteHelperPar, receivedMessagesPar) {
     app.use('/', routerHome);
     app.use('/api', routerAPI);
-    serialHelper = serialHelperPar;
+    lteHelper = lteHelperPar;
     receivedMessages = receivedMessagesPar;
 };
 
@@ -22,7 +22,7 @@ routerAPI.post("/messages", function(req, res, next) {
     var json = JSON.stringify(req.body);
     var serialBuffer = "";
     var hex = new Buffer(json, 'ascii').toString('hex');
-    serialHelper.write("AT+MAC=SNDBIN," + hex + ",0,2,1");
+    lteHelper.write(hex);
     req.body.status = "SENT";
     res.json(req.body);
 });
